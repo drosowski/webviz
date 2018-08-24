@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Datenstrukturen visualisieren</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Datenstrukturen visualisieren</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/sketch">Sketch'a'DOT</a></li>
+                <li class="active"><a href="/java">Java Datenstrukturen</a></li>
+                <li><a href="/ebaum">Beispiel: Entscheidungsbaum</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Java Datenstrukturen</h1>
+        <form id="bshform">
+            <div class="form-group">
+                <label for="bshcode"><a href="https://beanshell.org">Beanshell</a> code:</label>
+                <textarea id="bshcode" class="form-control" placeholder="Beanshell FTW!"></textarea>
+            </div>
+            <button type="submit" id="btn-los" class="btn btn-primary">DOTify!</button>
+        </form>
+        <div id="graph" style="padding: 20px; text-align: center;"></div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="webjars/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript"
+        src="webjars/viz.js/2.0.0/viz.js"></script>
+<script type="text/javascript"
+        src="webjars/viz.js/2.0.0/full.render.js"></script>
+<script type="text/javascript"
+        src="webjars/svg-pan-zoom/3.5.2/dist/svg-pan-zoom.min.js"></script>
+<script type="text/javascript" th:src="@{/js/webview.js}"></script>
+<script>
+    $(document).ready(function () {
+        $("#bshform").submit(function (event) {
+            event.preventDefault();
+            generateGraph();
+        });
+
+    });
+
+    function generateGraph() {
+        var bsh = $("#bshcode").val();
+        $("#btn-los").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            contentType: "application/text",
+            url: "/api/gendot",
+            data: bsh,
+            dataType: 'text',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                renderDot('graph', data);
+                $("#btn-los").prop("disabled", false);
+            },
+            error: function (e) {
+                $('#graph').val(e);
+                console.log("ERROR : ", e);
+                $("#btn-los").prop("disabled", false);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

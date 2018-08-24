@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Datenstrukturen visualisieren</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Datenstrukturen visualisieren</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/sketch">Sketch'a'DOT</a></li>
+                <li><a href="/java">Java Datenstrukturen</a></li>
+                <li class="active"><a href="/ebaum">Beispiel: Entscheidungsbaum</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Les Miserable</h1>
+        <div id="graph"></div>
+        <div id="graphsource" style="display: none;" th:text="${graph}"></div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="webjars/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript"
+        src="webjars/viz.js/2.0.0/viz.js"></script>
+<script type="text/javascript"
+        src="webjars/viz.js/2.0.0/full.render.js"></script>
+<script type="text/javascript"
+        src="webjars/svg-pan-zoom/3.5.2/dist/svg-pan-zoom.min.js"></script>
+<script type="text/javascript" th:src="@{/js/webview.js}"></script>
+<script>
+    renderDot("graph", $("#graphsource").contents()[0].data);
+</script>
+
+</body>
+</html>
