@@ -19,10 +19,10 @@ class WebviewController(
         return "sketch"
     }
 
-    @RequestMapping("/ebaum")
+    @RequestMapping("/network")
     fun ebaum(model: MutableMap<String, Any>): String {
         val graph = gmlRenderer.renderDot(javaClass.classLoader.getResourceAsStream("data/lesmiserables.gml"))
         model["graph"] = graph
-        return "ebaum"
+        return "network"
     }
 }
