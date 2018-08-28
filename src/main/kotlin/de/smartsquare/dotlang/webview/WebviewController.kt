@@ -1,11 +1,13 @@
 package de.smartsquare.dotlang.webview
 
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 class WebviewController(
-        private val gmlRenderer: GmlRenderer
+        private val gmlRenderer: GmlRenderer,
+        private val taxTreeRenderer: TaxTreeRenderer
 ) {
 
 
@@ -24,5 +26,19 @@ class WebviewController(
         val graph = gmlRenderer.renderDot(javaClass.classLoader.getResourceAsStream("data/lesmiserables.gml"))
         model["graph"] = graph
         return "network"
+    }
+
+    @RequestMapping("/tree")
+    fun tree(model: MutableMap<String, Any>): String {
+        val graph = taxTreeRenderer.renderDot(javaClass.classLoader.getResourceAsStream("data/Complex_Tree.tdt"))
+        model["graph"] = graph
+        return "tree"
+    }
+
+    @RequestMapping("/tree/{subtreeId}")
+    fun tree(model: MutableMap<String, Any>, @PathVariable("subtreeId") subtreeId: String): String {
+        val graph = taxTreeRenderer.renderDot(javaClass.classLoader.getResourceAsStream("data/Complex_Tree.tdt"), subtreeId)
+        model["graph"] = graph
+        return "tree"
     }
 }
