@@ -4,16 +4,21 @@ import com.google.common.collect.Maps
 import com.intellivat.core.mapping.Jdk8EnabledObjectMapper
 import com.intellivat.domain.masterdata.LocationLevel
 import com.intellivat.domain.taxtree.*
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.io.InputStream
 import java.util.*
 
+
 @Component
-class TaxTreeRenderer(
-        val objectMapper: Jdk8EnabledObjectMapper = Jdk8EnabledObjectMapper(),
-        val freemarker: FreemarkerHtmlRenderer
-) {
+class TaxTreeRenderer(val freemarker: FreemarkerHtmlRenderer) {
+
+    companion object {
+        val objectMapper: Jdk8EnabledObjectMapper = Jdk8EnabledObjectMapper()
+        val log = LoggerFactory.getLogger(this::class.java)
+        val LINE_LENGTH = 25
+    }
 
     fun renderDot(treeStream: InputStream): String {
         val tree = objectMapper.readValue(treeStream, TaxDecisionTree::class.java)
@@ -43,6 +48,9 @@ class TaxTreeRenderer(
         sb.append("}\n")
 
         sb.append("}\n")
+
+        log.info("\n" + sb.toString())
+
         return sb.toString()
     }
 
@@ -88,7 +96,7 @@ class TaxTreeRenderer(
 
     private fun buildLabel(label: String, color: String): String {
         val cleanedLabel = label.replace("\"", "\\\"")
-        return "label=\"$cleanedLabel\", fillcolor=\"$color\""
+        return "label=\"${splitString(cleanedLabel)}\", fillcolor=\"$color\""
     }
 
     private fun buildDecisionNodeLabel(decisionNode: SimpleDecisionNode, color: String): String {
@@ -100,7 +108,20 @@ class TaxTreeRenderer(
             question = question.replace("<${param.getName()}>", value)
 
         }
-        return "label=\"$question\", fillcolor=\"$color\""
+
+        return "label=\"${splitString(question)}\", fillcolor=\"$color\""
+    }
+
+    fun splitString(question: String?): StringBuilder {
+        val output = StringBuilder(question)
+        var index = 0
+        while (index + LINE_LENGTH < output.length) {
+            index = output.lastIndexOf(" ", index + LINE_LENGTH)
+            if (index != -1) {
+                output.replace(index, index + 1, "\n")
+            }
+        }
+        return output
     }
 
     private fun buildResultNodeLabel(resultNode: ResultNode, color: String): String {

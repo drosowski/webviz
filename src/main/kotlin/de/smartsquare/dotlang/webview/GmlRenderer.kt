@@ -3,11 +3,14 @@ package de.smartsquare.dotlang.webview
 import com.tinkerpop.blueprints.Direction
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph
 import com.tinkerpop.blueprints.util.io.gml.GMLReader
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.io.InputStream
 
 @Component
 class GmlRenderer {
+
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     fun renderDot(gmlStream: InputStream): String {
         val graph = TinkerGraph()
@@ -17,7 +20,9 @@ class GmlRenderer {
 
         for (vertex in graph.vertices) {
             val label = vertex.getProperty<String>("label")
-            sb.append("${vertex.id} [label=\"$label\"]\n")
+            val edgeCount = vertex.getEdges(Direction.IN).count()
+            val color = if (edgeCount >= 5) ", style=filled, fillcolor=\"lightblue\"" else ""
+            sb.append("${vertex.id} [label=\"$label\"$color]\n")
         }
         for (edge in graph.edges) {
             val outV = edge.getVertex(Direction.OUT)
@@ -28,6 +33,9 @@ class GmlRenderer {
         }
 
         sb.append("}")
+
+        log.info("\n" + sb.toString())
+
         return sb.toString()
     }
 }
