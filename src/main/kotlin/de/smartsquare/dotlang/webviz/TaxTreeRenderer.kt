@@ -1,4 +1,4 @@
-package de.smartsquare.dotlang.webview
+package de.smartsquare.dotlang.webviz
 
 import com.google.common.collect.Maps
 import com.intellivat.core.mapping.Jdk8EnabledObjectMapper
@@ -119,6 +119,8 @@ class TaxTreeRenderer(val freemarker: FreemarkerHtmlRenderer) {
             index = output.lastIndexOf(" ", index + LINE_LENGTH)
             if (index != -1) {
                 output.replace(index, index + 1, "\n")
+            } else {
+                index = LINE_LENGTH;
             }
         }
         return output

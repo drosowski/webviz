@@ -1,27 +1,28 @@
-package de.smartsquare.dotlang.webview
+package de.smartsquare.dotlang.webviz
 
 import com.tinkerpop.blueprints.Direction
-import com.tinkerpop.blueprints.Graph
-import com.tinkerpop.blueprints.GraphFactory
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph
 import com.tinkerpop.blueprints.util.io.gml.GMLReader
-import org.apache.commons.configuration.Configuration
-import org.junit.Test
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
+import java.io.InputStream
 
-class GmlReadTest {
+@Component
+class GmlRenderer {
 
-    @Test
-    fun read_a_gml() {
-        val gmlStream = javaClass.classLoader.getResourceAsStream("data/lesmiserables.gml")
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
+    fun renderDot(gmlStream: InputStream): String {
         val graph = TinkerGraph()
-        val gmlReader = GMLReader.inputGraph(graph, gmlStream)
+        GMLReader.inputGraph(graph, gmlStream)
 
         val sb = StringBuilder("digraph {\n")
 
         for (vertex in graph.vertices) {
             val label = vertex.getProperty<String>("label")
-            sb.append("${vertex.id} [label=\"$label\"]\n")
+            val edgeCount = vertex.getEdges(Direction.IN).count()
+            val color = if (edgeCount >= 5) ", style=filled, fillcolor=\"lightblue\"" else ""
+            sb.append("${vertex.id} [label=\"$label\"$color]\n")
         }
         for (edge in graph.edges) {
             val outV = edge.getVertex(Direction.OUT)
@@ -32,6 +33,9 @@ class GmlReadTest {
         }
 
         sb.append("}")
-        print(sb.toString())
+
+        log.info("\n" + sb.toString())
+
+        return sb.toString()
     }
 }

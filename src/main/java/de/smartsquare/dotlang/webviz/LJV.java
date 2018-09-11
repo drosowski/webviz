@@ -1,4 +1,4 @@
-package de.smartsquare.dotlang.webview;//- de.smartsquare.dotlang.webview.LJV.java --- Generate a graph of an object, using Graphviz
+package de.smartsquare.dotlang.webviz;//- de.smartsquare.dotlang.webviz.LJV.java --- Generate a graph of an object, using Graphviz
 
 //- Author:     John Hamer <J.Hamer@cs.auckland.ac.nz>
 //- Created:    Sat May 10 15:27:48 2003
@@ -20,11 +20,10 @@ package de.smartsquare.dotlang.webview;//- de.smartsquare.dotlang.webview.LJV.ja
 //-   with this program; if not, write to the Free Software Foundation, Inc.,
 //-   59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-//- $Id: de.smartsquare.dotlang.webview.LJV.java,v 1.1 2004/07/14 02:03:45 jham005 Exp $
+//- $Id: de.smartsquare.dotlang.webviz.LJV.java,v 1.1 2004/07/14 02:03:45 jham005 Exp $
 
 import java.io.*;
 import java.lang.reflect.*;
-import java.nio.file.Files;
 import java.util.*;
 
 class LJV {
@@ -206,7 +205,7 @@ class LJV {
 
         /**
          * Toggle whether to display qualified nested class names in the
-         * label for an object from the same package as de.smartsquare.dotlang.webview.LJV (true) or
+         * label for an object from the same package as de.smartsquare.dotlang.webviz.LJV (true) or
          * to display an abbreviated name (false, the default).
          */
         public boolean qualifyNestedClassNames = false;
@@ -520,7 +519,7 @@ class LJV {
      */
     public static String drawGraph(Context ctx, Object obj, String file) {
         try {
-            File dotfile = ctx.keepDotFile == null ? File.createTempFile("de.smartsquare.dotlang.webview.LJV", "dot") : new File(ctx.keepDotFile);
+            File dotfile = ctx.keepDotFile == null ? File.createTempFile("de.smartsquare.dotlang.webviz.LJV", "dot") : new File(ctx.keepDotFile);
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
             PrintWriter out = new PrintWriter(byteOut);
             try {
@@ -563,4 +562,4 @@ class LJV {
     }
 
 }
-//- de.smartsquare.dotlang.webview.LJV.java ends here
+//- de.smartsquare.dotlang.webviz.LJV.java ends here

@@ -1,4 +1,4 @@
-package de.smartsquare.dotlang.webview
+package de.smartsquare.dotlang.webviz
 
 import freemarker.ext.beans.BeansWrapper
 import freemarker.template.Configuration

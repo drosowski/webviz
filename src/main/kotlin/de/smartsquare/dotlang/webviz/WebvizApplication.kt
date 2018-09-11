@@ -1,12 +1,12 @@
-package de.smartsquare.dotlang.webview
+package de.smartsquare.dotlang.webviz
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class WebviewApplication {
+class WebvizApplication {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(WebviewApplication::class.java, *args)
+    SpringApplication.run(WebvizApplication::class.java, *args)
 }

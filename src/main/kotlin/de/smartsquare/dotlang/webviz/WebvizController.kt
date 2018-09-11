@@ -1,11 +1,11 @@
-package de.smartsquare.dotlang.webview
+package de.smartsquare.dotlang.webviz
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-class WebviewController(
+class WebvizController(
         private val gmlRenderer: GmlRenderer,
         private val taxTreeRenderer: TaxTreeRenderer
 ) {

@@ -4,6 +4,7 @@
     <title>Datenstrukturen visualisieren</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" type="text/css"
           href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
 
@@ -31,7 +32,7 @@
 
     <div class="starter-template">
         <h1>Steuerentscheidungsbaum</h1>
-        <div id="graph"></div>
+        <div id="graph" class="graph"></div>
         <div id="graphsource" style="display: none;" th:text="${graph}"></div>
     </div>
 
@@ -48,7 +49,7 @@
         src="/webjars/viz.js/2.0.0/full.render.js"></script>
 <script type="text/javascript"
         src="/webjars/svg-pan-zoom/3.5.2/dist/svg-pan-zoom.min.js"></script>
-<script type="text/javascript" th:src="@{/js/webview.js}"></script>
+<script type="text/javascript" th:src="@{/js/webviz.js}"></script>
 <script>
     renderDot("graph", $("#graphsource").contents()[0].data);
 </script>
