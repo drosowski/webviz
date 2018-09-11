@@ -6,7 +6,7 @@ function renderDot(target, source) {
             document.getElementById(target).innerHTML = "";
             document.getElementById(target).appendChild(element);
             svgPanZoom(element, {
-                controlIconsEnabled: true,
+                controlIconsEnabled: false,
                 minZoom: 0.1
             });
         })

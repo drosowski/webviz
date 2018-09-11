@@ -4,7 +4,7 @@
     <title>Datenstrukturen visualisieren</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/webviz.css}"/>
     <link rel="stylesheet" type="text/css"
           href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
 
@@ -35,8 +35,10 @@
         <form id="bshform">
             <div class="form-group">
                 <label for="bshcode"><a href="http://www.beanshell.org">Beanshell</a> code:</label>
-                <textarea id="bshcode" class="form-control" placeholder="Beanshell FTW!"></textarea>
+                <textarea id="bshcode" class="form-control"
+                          placeholder='model = new String[] { "foo", "bar" }'></textarea>
             </div>
+            <p>Die Datenstruktur in der Variablen <em>model</em> wird gerendert!</p>
             <p>Powered by <a href="https://www.cs.auckland.ac.nz/~j-hamer/LJV.html">LJV</a>!</p>
             <button type="submit" id="btn-los" class="btn btn-primary">DOTify!</button>
         </form>
