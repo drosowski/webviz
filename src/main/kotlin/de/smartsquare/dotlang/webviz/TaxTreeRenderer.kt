@@ -34,7 +34,7 @@ class TaxTreeRenderer(val freemarker: FreemarkerHtmlRenderer) {
         return renderDot(rootNode, leaves)
     }
 
-    fun renderDot(rootNode: RootNode, leaves: MutableSet<TreeNode>): String {
+    private fun renderDot(rootNode: RootNode, leaves: MutableSet<TreeNode>): String {
         val sb = StringBuilder("digraph {\n")
         sb.append("  node [shape=box,style=filled]\n")
         val visited = mutableSetOf<TreeNode>()
